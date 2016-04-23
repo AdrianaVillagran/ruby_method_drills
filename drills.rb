@@ -393,3 +393,8 @@ end
 #most_frequent_word
   # takes in a string
   # finds the word in a string that appears with the most frequency
+
+def most_frequent_word(str)
+    word_count = word_count(str)
+    word_count.empty? ? nil : word_count.max_by{|key,value| value}[0]
+end
