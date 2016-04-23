@@ -395,6 +395,11 @@ end
   # finds the word in a string that appears with the most frequency
 
 def most_frequent_word(str)
+    # sets word count hash
     word_count = word_count(str)
+    # ternary statement: returns nil if word count hash is empty (str = "")
+    # if word count hash is not empty => finds max by value which returns an array
+    # of the key/value pair with the highest value ex. ['word', 3]. The zero index 
+    # returns the word that occurs with the most frequency
     word_count.empty? ? nil : word_count.max_by{|key,value| value}[0]
 end
