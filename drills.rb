@@ -166,19 +166,33 @@ end
   # counts the spaces in a string
   # returns number of spaces
 
+def count_spaces(str)
+  str.count(" ")
+end
+
 #string_lengths
   # takes in an array of strings
   # returns an array containing the lengths of the strings
+def string_lengths(arr)
+  arr.map {|str| str.length }
+end
 
 #remove_falsy_values
   # takes in a list
   # filters out falsy values from a list
   # returns the updated list
 
+
+
 #exclude_last
   # takes in an array or string
   # removes the last item from the array or string
   # returns it
+
+def exclude_last(input)
+  input[0...-1]
+end
+
 
 #exclude_first
   # takes in an array or string
@@ -186,23 +200,43 @@ end
   # removes the first character from a string
   # returns a new string - does not alter the original input (non-destructive)
 
+def exclude_first(input)
+  input[1..-1]
+end
+
 #exclude_ends
   # takes in an array or string
   # removes the first and last items from an array
   # removes the first and last characters from a string
 
+def exclude_ends(input)
+  input[1...-1]
+end
+
 #select_every_even
   # takes in an array
   # returns a list of even-indexed items from the input
+def select_every_even(arr)
+  arr.select.with_index { |el, i| el if i % 2 == 0 }
+end
 
 #select_every_odd
   # takes in an array
   # returns a list of odd-indexed items
 
+def select_every_odd(arr)
+  arr.select.with_index { |el, i| el if i.odd? }
+end
+
 #select_every_n
   # takes in an array
   # returns a list of items at an index evenly divisible by n
   # defaults to an n value of 1
+
+def select_every_n(arr, n = 1)
+  arr.select.with_index { |el, i| el if (i % n).zero? }
+end
+
 
 ## STRETCH ##
 #compile_agenda
@@ -212,6 +246,7 @@ end
   # sort order can (optionally) be changed to priority descending
   # the bullet can (optionally) be changed to any symbol
 
+
 ##############################
 #### MANIPULATING NUMBERS ####
 ##############################
@@ -220,6 +255,14 @@ end
   # returns an array containing every integer from 0 to n
   # counts up or down
   # rounds off decimals
+def count_to(num)
+  num = num.to_i
+  if num >= 0
+    (0..num).to_a
+  else
+    0.downto(num).to_a
+  end
+end
 
 #is_integer?
   # takes in a number
@@ -228,6 +271,15 @@ end
   # returns false for non-integer decimals
   # returns false for Float::NAN
   # returns false for non-numbers
+  # this one took a helluva long time to get the order right (snuck a peak at the
+  # solutions for guidance)
+  # true if num.class == Fixnum || num.class == Bignum
+  # true if num.is_a?(Float) && !num.nan? && num.to_i == num
+  # otherwise false
+def is_integer?(num)
+  num.class == Fixnum || num.class == Bignum ||
+  (num.is_a?(Float) && !num.nan? && num.to_i == num)
+end
 
 #is_prime?
   # takes in a number and checks if it's prime
@@ -237,11 +289,43 @@ end
   # returns true for prime numbers
   # Hint: google prime numbers!
 
+def is_prime?(num)
+  # returns false for non-integer decimals & for numbers less than or equal to 1
+  if !is_integer?(num) || num <= 1
+    return false
+  else
+    # each loop checks if num is prime
+    (2...num).each do |n|
+      if num % n == 0
+        # returns false if num is not prime
+        return false
+      end
+    end
+    #returns true if num passes all the tests. num is prime!
+    true
+  end
+end
+
 #primes_less_than
   # takes in a number
   # returns an empty array if there are no primes below num
   # does not return the number itself
   # finds all primes less than the given number
+
+def primes_less_than(num)
+  # empty array to store prime numbers less than num
+  primes = []
+  # each loop from range of possible prime numbers less than num
+  (2...num).each do |n|
+    #checks for divisibility
+    if is_prime?(n)
+      #if n is prime then push it into the list of primes
+      primes.push(n)
+    end
+  end
+  #return list of primes; empty if none
+  primes
+end
 
 ## STRETCH ##
 #iterative_factorial
@@ -250,6 +334,16 @@ end
   # returns NaN for numbers less than 0
   # returns NaN for non-integers
   # calculates and returns the factorial of the input number
+  # Factorial Reminder: 5! = 5 * 4 * 3 * 2 * 1
+
+def iterative_factorial(num)
+  # returns 1 if num is 1 or 0
+  return 1 if num == 1 || num == 0
+  # returns NaN if num is less than 0 or is not a whole number
+  return Float::NAN if num < 0 || !is_integer?(num)
+  # otherwise calculates factorial
+  (1..num).inject(:*)
+end
 
 
 
@@ -261,6 +355,8 @@ end
   # counts how many times each character appears in a string
   # ignores case
   # returns the hash
+
+
 
 ## STRETCH ##
 #word_count
