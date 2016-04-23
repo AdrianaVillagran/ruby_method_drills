@@ -356,6 +356,14 @@ end
   # ignores case
   # returns the hash
 
+def character_count(str)
+  count = Hash.new(0)
+  str.each_char do |char|
+    char = char.downcase
+    count[char] += 1
+  end
+  count
+end
 
 
 ## STRETCH ##
@@ -365,6 +373,21 @@ end
   # ignores case
   # ignores characters that are not in the sequence a-z
   # returns a hash with all the words and their counts
+
+def word_count(str)
+  #creates a new hash with default value of 0
+  count = Hash.new(0)
+  #splits str at spaces and runs each loop on array of words
+  str.split(" ").each do |word|
+    # sets each word to lowercase and replaces all characters that are not in
+    # a-z range with empty string (thanks, Stack Overflow!)
+    word = word.downcase.gsub(/[^a-z ]/, '')
+    # sets key to word and updates value count
+    count[word] += 1
+  end
+  #returns count hash
+  count
+end
 
 ## STRETCH ##
 #most_frequent_word
