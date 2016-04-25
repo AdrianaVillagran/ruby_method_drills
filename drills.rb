@@ -115,8 +115,9 @@ end
 #croon
   # seperates word characters with dashes
   # preserves whitespace between words
-  # google map
+
 def croon(str)
+  # 
   str.split(" ").map { |word| word.split(//).join("-")}.join(" ")
 end
 
@@ -149,11 +150,11 @@ end
   # does not add a period if one is already there
   # does not add a period if any form of terminal punctuation is present
   # returns the sentence
-  # googe include?
-  # better to use ternary statement here:
-  #{}"!?.".include?(str[-1]) ? str : str + "."
+  # better to use ternary statement here: "!?.".include?(str[-1]) ? str : str + "."
 def add_period(str)
+  # returns string if there is already a form of terminal punctuation
   return str if "!?.".include?(str[-1])
+  # otherwise adds a period
   str + "."
 end
 
@@ -173,7 +174,10 @@ end
 #string_lengths
   # takes in an array of strings
   # returns an array containing the lengths of the strings
+
 def string_lengths(arr)
+  # counts the length of each element in the array of strings and creates a new
+  # array with the corresponding string lengths
   arr.map {|str| str.length }
 end
 
@@ -190,6 +194,7 @@ end
   # returns it
 
 def exclude_last(input)
+  # returns input but excludes last index
   input[0...-1]
 end
 
@@ -201,6 +206,7 @@ end
   # returns a new string - does not alter the original input (non-destructive)
 
 def exclude_first(input)
+  #returns input but excludes 0-index
   input[1..-1]
 end
 
@@ -210,6 +216,7 @@ end
   # removes the first and last characters from a string
 
 def exclude_ends(input)
+  # returns input but excludes first and last index
   input[1...-1]
 end
 
@@ -225,6 +232,7 @@ end
   # returns a list of odd-indexed items
 
 def select_every_odd(arr)
+  # i.odd? same as i % 2 != 0      COOOOL!
   arr.select.with_index { |el, i| el if i.odd? }
 end
 
@@ -234,6 +242,7 @@ end
   # defaults to an n value of 1
 
 def select_every_n(arr, n = 1)
+  # selects elements in array that are divisible by n
   arr.select.with_index { |el, i| el if (i % n).zero? }
 end
 
@@ -256,10 +265,14 @@ end
   # counts up or down
   # rounds off decimals
 def count_to(num)
+  # sets num to integer if float
   num = num.to_i
   if num >= 0
+    # returns array of integers from 0 to num
     (0..num).to_a
   else
+    # if num is a negative integert, returns array of integers that counts
+    # down from 0 to num
     0.downto(num).to_a
   end
 end
@@ -269,15 +282,15 @@ end
   # returns true for Fixnums and Bignums (whole number or 'integer' types)
   # returns true for Floats (decimals) equal to integers
   # returns false for non-integer decimals
-  # returns false for Float::NAN
+  # returns false for
   # returns false for non-numbers
   # this one took a helluva long time to get the order right (snuck a peak at the
   # solutions for guidance)
-  # true if num.class == Fixnum || num.class == Bignum
-  # true if num.is_a?(Float) && !num.nan? && num.to_i == num
-  # otherwise false
+
 def is_integer?(num)
+  # only returns true if num is a Fixnum or a Bignum
   num.class == Fixnum || num.class == Bignum ||
+  # and if num is a Float then it must be a whole integer (ex. 2.0 = 2) and not Float::NAN
   (num.is_a?(Float) && !num.nan? && num.to_i == num)
 end
 
@@ -357,11 +370,16 @@ end
   # returns the hash
 
 def character_count(str)
+  # creates new hash with default value of zero
   count = Hash.new(0)
+  # each loop by char
   str.each_char do |char|
+    # ignores case
     char = char.downcase
+    # sets char key and increases value by 1
     count[char] += 1
   end
+  #returns count
   count
 end
 
@@ -397,9 +415,9 @@ end
 def most_frequent_word(str)
     # sets word count hash
     word_count = word_count(str)
-    # ternary statement: returns nil if word count hash is empty (str = "")
-    # if word count hash is not empty => finds max by value which returns an array
-    # of the key/value pair with the highest value ex. ['word', 3]. The zero index 
+    # Ternary statement: returns nil if word count hash is empty (if str == "")
+    # otherwise searches hash for max_by value which returns an array
+    # of the key/value pair with the highest value (ex. ['word', 3]). The zero index
     # returns the word that occurs with the most frequency
     word_count.empty? ? nil : word_count.max_by{|key,value| value}[0]
 end
